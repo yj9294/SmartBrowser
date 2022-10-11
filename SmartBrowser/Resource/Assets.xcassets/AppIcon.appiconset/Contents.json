@@ -1,96 +1,112 @@
 {
   "images" : [
     {
+      "filename" : "40X40.jpg",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "20x20"
     },
     {
+      "filename" : "60X60.jpg",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
       "size" : "20x20"
     },
     {
+      "filename" : "58X58.jpg",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "29x29"
     },
     {
+      "filename" : "87X87.jpg",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
       "size" : "29x29"
     },
     {
+      "filename" : "76X76.jpg",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "38x38"
     },
     {
+      "filename" : "114X114.jpg",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
       "size" : "38x38"
     },
     {
+      "filename" : "80X80.jpg",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "40x40"
     },
     {
+      "filename" : "120X120.jpg",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
       "size" : "40x40"
     },
     {
+      "filename" : "120X120 1.jpg",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "60x60"
     },
     {
+      "filename" : "180X180.jpg",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
       "size" : "60x60"
     },
     {
+      "filename" : "128X128.jpg",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "64x64"
     },
     {
+      "filename" : "192X92.jpg",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
       "size" : "64x64"
     },
     {
+      "filename" : "136X136.jpg",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "68x68"
     },
     {
+      "filename" : "152X152.jpg",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "76x76"
     },
     {
+      "filename" : "167X167.jpg",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "83.5x83.5"
     },
     {
+      "filename" : "1024X1024.jpg",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"

@@ -189,9 +189,6 @@ extension HomeVC {
             stopSearch()
         } else {
             // search
-            if let text = searchField.text {
-                FirebaseUtil.logEvent(name: .navigaSearch, params: ["lig": text])
-            }
             searching()
         }
     }
@@ -333,6 +330,9 @@ extension HomeVC {
 extension HomeVC: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searching()
+        if let text = searchField.text {
+            FirebaseUtil.logEvent(name: .navigaSearch, params: ["lig": text])
+        }
         return true
     }
 }

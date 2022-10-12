@@ -36,7 +36,7 @@
 		C76B8D8628F5352B00D4DA4A /* CleanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76B8D8428F5352B00D4DA4A /* CleanVC.swift */; };
 		C76B8D8728F5352B00D4DA4A /* CleanVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C76B8D8528F5352B00D4DA4A /* CleanVC.xib */; };
 		C76B8D8928F537B600D4DA4A /* clean_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = C76B8D8828F537B600D4DA4A /* clean_animation.json */; };
-		C7D679BE28F5421200D3A97F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7D679BD28F5421200D3A97F /* GoogleService-Info.plist */; };
+		C7D679C128F6935800D3A97F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7D679C028F6935800D3A97F /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,7 +73,7 @@
 		C76B8D8428F5352B00D4DA4A /* CleanVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CleanVC.swift; sourceTree = "<group>"; };
 		C76B8D8528F5352B00D4DA4A /* CleanVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CleanVC.xib; sourceTree = "<group>"; };
 		C76B8D8828F537B600D4DA4A /* clean_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = clean_animation.json; sourceTree = "<group>"; };
-		C7D679BD28F5421200D3A97F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C7D679C028F6935800D3A97F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,7 +121,7 @@
 		C76B8D4328F2639900D4DA4A /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				C7D679BD28F5421200D3A97F /* GoogleService-Info.plist */,
+				C7D679C028F6935800D3A97F /* GoogleService-Info.plist */,
 				C76B8D8828F537B600D4DA4A /* clean_animation.json */,
 				C76B8D4428F2639900D4DA4A /* Assets.xcassets */,
 				C76B8D4528F2639900D4DA4A /* LaunchScreen.storyboard */,
@@ -293,7 +293,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7D679BE28F5421200D3A97F /* GoogleService-Info.plist in Resources */,
+				C7D679C128F6935800D3A97F /* GoogleService-Info.plist in Resources */,
 				C76B8D4F28F2639900D4DA4A /* Main.storyboard in Resources */,
 				C76B8D7128F2C85900D4DA4A /* CleanAlertView.xib in Resources */,
 				C76B8D7528F2D1B300D4DA4A /* TabVC.xib in Resources */,
@@ -538,10 +538,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 7HTJ8C6E28;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmartBrowser/Resource/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SmartBrowser;
@@ -558,8 +558,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.testbird.SmartBrowser.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.browser.smart.nice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
@@ -575,10 +576,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 7HTJ8C6E28;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmartBrowser/Resource/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SmartBrowser;
@@ -595,8 +596,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.testbird.SmartBrowser.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.browser.smart.nice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;

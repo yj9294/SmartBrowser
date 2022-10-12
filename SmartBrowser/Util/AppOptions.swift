@@ -8,11 +8,11 @@
 import UIKit
 
 func SLog(_ log: @autoclosure () -> String) {
-//#if DEBUG
+#if DEBUG
     NSLog("\(log())")
-//#else
-//    debugPrint(log())
-//#endif
+#else
+    debugPrint(log())
+#endif
 }
 
 var AppSceneDelegate: SceneDelegate? = nil

@@ -20,9 +20,12 @@ class HomeVC: BaseVC {
     @IBOutlet weak var searchPlaceholderLabel: UILabel!
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var tabButton: UIButton!
+    @IBOutlet weak var adView: NativeADView!
     
     var startDate: Date? = nil
-    
+    var willApear = false
+    var adImpressionDate: Date? = nil
+
     var webView: WKWebView {
         BrowserUtil.shared.webItem.webView
     }
@@ -33,6 +36,31 @@ class HomeVC: BaseVC {
         ATTrackingManager.requestTrackingAuthorization { status in
             debugPrint(status)
         }
+        
+        // ad loaded
+        NotificationCenter.default.addObserver(forName: .nativeUpdate, object: nil, queue: .main) { [weak self] noti in
+            
+            // native ad is being display.
+            if let ad = noti.object as? NativeADModel, self?.willApear == true {
+                
+                // view controller impression ad date betwieen 10s to show ad
+                if Date().timeIntervalSince1970 - (self?.adImpressionDate ?? Date(timeIntervalSinceNow: -11)).timeIntervalSince1970 > 10 {
+                    self?.adView.nativeAd = ad.nativeAd
+                    self?.adImpressionDate = Date()
+                } else {
+                    SLog("[ad] 10s home 原生广告刷新或数据填充间隔.")
+                }
+            } else {
+                self?.adView.nativeAd = nil
+            }
+        }
+        
+        // native ad enterbackground
+        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { [weak self] _ in
+            GADUtil.share.close(.native)
+            self?.willApear = false
+        }
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -41,12 +69,21 @@ class HomeVC: BaseVC {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        // ad flag
+        willApear = true
+        
+        // app log event
         FirebaseUtil.logEvent(name: .homeShow)
         if BrowserUtil.shared.webItem.isNavigation {
             FirebaseUtil.logEvent(name: .navigaShow)
+            
+            // load GAD
+            GADUtil.share.load(.native)
+            GADUtil.share.load(.interstitial)
         }
-        tabButton.setTitle("\(BrowserUtil.shared.webItems.count)", for: .normal)
-        tabButton.setTitleColor(.black, for: .normal)
+
+        // web view delegate and clean webView until display
         view.subviews.forEach {
             if $0 is WKWebView {
                 $0.removeFromSuperview()
@@ -59,13 +96,25 @@ class HomeVC: BaseVC {
             webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), context: nil)
             webView.addObserver(self, forKeyPath: #keyPath(WKWebView.url), context: nil)
         }
+        
+        // refresh zhe home view state
         setupUI()
+        
+
+        
     }
     
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        // ad flag
+        willApear = false
+        
         webViewDisappear()
+        
+        // ad disappear
+        GADUtil.share.close(.native)
     }
     
     func webViewDisappear() {
@@ -108,7 +157,7 @@ class HomeVC: BaseVC {
         
         
         tabButton.setTitle("\(BrowserUtil.shared.webItems.count)", for: .normal)
-        
+        tabButton.setTitleColor(.black, for: .normal)
     }
     
     func searching() {
@@ -187,6 +236,11 @@ extension HomeVC {
             // cancel
             FirebaseUtil.logEvent(name: .cleanClick)
             stopSearch()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                if self.webView.url == nil {
+                    self.webView.removeFromSuperview()
+                }
+            }
         } else {
             // search
             searching()
@@ -256,9 +310,11 @@ extension HomeVC {
             let vc = CleanVC {
                 FirebaseUtil.logEvent(name: .cleanSuccess)
                 BrowserUtil.shared.clean(from: self)
-                self.setupUI()
-                self.alert("Cleaned successfully.")
-                FirebaseUtil.logEvent(name: .cleanAlert)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.setupUI()
+                    FirebaseUtil.logEvent(name: .cleanAlert)
+                    self.alert("Cleaned Successfully.")
+                }
             }
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true)

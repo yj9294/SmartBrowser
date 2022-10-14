@@ -23,6 +23,10 @@
 	<string>b00a269991a03329e9409525318e503b</string>
 	<key>FacebookDisplayName</key>
 	<string>SmartBrowser</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-8117363890722208~9109837406</string>
+	<key>GADNativeAdValidatorEnabled</key>
+	<false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

@@ -37,6 +37,9 @@
 		C76B8D8728F5352B00D4DA4A /* CleanVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C76B8D8528F5352B00D4DA4A /* CleanVC.xib */; };
 		C76B8D8928F537B600D4DA4A /* clean_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = C76B8D8828F537B600D4DA4A /* clean_animation.json */; };
 		C7D679C128F6935800D3A97F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C7D679C028F6935800D3A97F /* GoogleService-Info.plist */; };
+		C7D679C328F809AC00D3A97F /* GADUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D679C228F809AC00D3A97F /* GADUtil.swift */; };
+		C7D679C528F80EE300D3A97F /* admob.json in Resources */ = {isa = PBXBuildFile; fileRef = C7D679C428F80EE300D3A97F /* admob.json */; };
+		C7D679C728F8FCF800D3A97F /* NativeADView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D679C628F8FCF800D3A97F /* NativeADView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +77,9 @@
 		C76B8D8528F5352B00D4DA4A /* CleanVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CleanVC.xib; sourceTree = "<group>"; };
 		C76B8D8828F537B600D4DA4A /* clean_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = clean_animation.json; sourceTree = "<group>"; };
 		C7D679C028F6935800D3A97F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C7D679C228F809AC00D3A97F /* GADUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GADUtil.swift; sourceTree = "<group>"; };
+		C7D679C428F80EE300D3A97F /* admob.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = admob.json; sourceTree = "<group>"; };
+		C7D679C628F8FCF800D3A97F /* NativeADView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeADView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				C7D679C028F6935800D3A97F /* GoogleService-Info.plist */,
+				C7D679C428F80EE300D3A97F /* admob.json */,
 				C76B8D8828F537B600D4DA4A /* clean_animation.json */,
 				C76B8D4428F2639900D4DA4A /* Assets.xcassets */,
 				C76B8D4528F2639900D4DA4A /* LaunchScreen.storyboard */,
@@ -189,6 +196,7 @@
 			children = (
 				C76B8D6E28F2C82000D4DA4A /* CleanAlertView.swift */,
 				C76B8D7028F2C85800D4DA4A /* CleanAlertView.xib */,
+				C7D679C628F8FCF800D3A97F /* NativeADView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -211,6 +219,7 @@
 				C76B8D6A28F2965300D4DA4A /* AppOptions.swift */,
 				C76B8D6C28F2B47700D4DA4A /* BrowserUtil.swift */,
 				C76B8D8228F5189700D4DA4A /* FirebaseUtil.swift */,
+				C7D679C228F809AC00D3A97F /* GADUtil.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -300,6 +309,7 @@
 				C76B8D7D28F509A600D4DA4A /* SettingView.xib in Resources */,
 				C76B8D7928F2D47C00D4DA4A /* TabCell.xib in Resources */,
 				C76B8D6628F292BF00D4DA4A /* LaunchVC.xib in Resources */,
+				C7D679C528F80EE300D3A97F /* admob.json in Resources */,
 				C76B8D6228F26EDE00D4DA4A /* HomeVC.xib in Resources */,
 				C76B8D8928F537B600D4DA4A /* clean_animation.json in Resources */,
 				C76B8D8728F5352B00D4DA4A /* CleanVC.xib in Resources */,
@@ -377,10 +387,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7D679C728F8FCF800D3A97F /* NativeADView.swift in Sources */,
 				C76B8D6B28F2965300D4DA4A /* AppOptions.swift in Sources */,
 				C76B8D8328F5189700D4DA4A /* FirebaseUtil.swift in Sources */,
 				C76B8D8028F5113A00D4DA4A /* PrivacyVC.swift in Sources */,
 				C76B8D5128F2639900D4DA4A /* AppDelegate.swift in Sources */,
+				C7D679C328F809AC00D3A97F /* GADUtil.swift in Sources */,
 				C76B8D8628F5352B00D4DA4A /* CleanVC.swift in Sources */,
 				C76B8D7428F2D1B300D4DA4A /* TabVC.swift in Sources */,
 				C76B8D6128F26EDE00D4DA4A /* HomeVC.swift in Sources */,
@@ -468,7 +480,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -522,7 +534,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -542,7 +554,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 2G6UR5J26F;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmartBrowser/Resource/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SmartBrowser;
@@ -558,7 +570,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.browser.smart.nice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -581,7 +593,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 2G6UR5J26F;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SmartBrowser/Resource/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SmartBrowser;
@@ -597,7 +609,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.browser.smart.nice;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

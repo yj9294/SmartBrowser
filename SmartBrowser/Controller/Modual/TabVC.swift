@@ -10,10 +10,40 @@ import UIKit
 class TabVC: BaseVC {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var adView: NativeADView!
+    
+    var willApear = false
+    var adImpressionDate: Date? {
+        GADUtil.share.tabNativeAdImpressionDate
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        
+        // ad loaded
+        NotificationCenter.default.addObserver(forName: .nativeUpdate, object: nil, queue: .main) { [weak self] noti in
+            
+            // native ad is being display.
+            if let ad = noti.object as? NativeADModel, self?.willApear == true {
+                
+                // view controller impression ad date betwieen 10s to show ad
+                if Date().timeIntervalSince1970 - (self?.adImpressionDate ?? Date(timeIntervalSinceNow: -11)).timeIntervalSince1970 > 10 {
+                    self?.adView.nativeAd = ad.nativeAd
+                    GADUtil.share.tabNativeAdImpressionDate = Date()
+                } else {
+                    SLog("[ad] 10s tab 原生广告刷新间隔.")
+                }
+            } else {
+                self?.adView.nativeAd = nil
+            }
+        }
+        
+        // native ad enterbackground
+        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { [weak self] _ in
+            GADUtil.share.close(.native)
+            self?.willApear = false
+        }
     }
     
     func setupUI() {
@@ -22,7 +52,27 @@ class TabVC: BaseVC {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // app log event
         FirebaseUtil.logEvent(name: .tabShow)
+        
+        // ad flag
+        willApear = true
+        
+        // load GAD
+        GADUtil.share.load(.native)
+        GADUtil.share.load(.interstitial)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // ad flag
+        willApear = false
+        
+        // ad disappear
+        GADUtil.share.close(.native)
     }
 
 }

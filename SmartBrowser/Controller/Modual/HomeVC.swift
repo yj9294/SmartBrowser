@@ -20,9 +20,11 @@ class HomeVC: BaseVC {
     @IBOutlet weak var searchPlaceholderLabel: UILabel!
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var tabButton: UIButton!
+    @IBOutlet weak var adView: NativeADView!
     
     var startDate: Date? = nil
-    
+    var willApear = false
+
     var webView: WKWebView {
         BrowserUtil.shared.webItem.webView
     }
@@ -33,6 +35,22 @@ class HomeVC: BaseVC {
         ATTrackingManager.requestTrackingAuthorization { status in
             debugPrint(status)
         }
+        
+        // ad loaded
+        NotificationCenter.default.addObserver(forName: .nativeUpdate, object: nil, queue: .main) { [weak self] noti in
+            if let ad = noti.object as? NativeADModel, self?.willApear == true {
+                self?.adView.nativeAd = ad.nativeAd
+            } else {
+                self?.adView.nativeAd = nil
+            }
+        }
+        
+        // native ad enterbackground
+        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { [weak self] _ in
+            GADUtil.share.close(.native)
+            self?.willApear = false
+        }
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -41,12 +59,17 @@ class HomeVC: BaseVC {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        // ad flag
+        willApear = true
+        
+        // app log event
         FirebaseUtil.logEvent(name: .homeShow)
         if BrowserUtil.shared.webItem.isNavigation {
             FirebaseUtil.logEvent(name: .navigaShow)
         }
-        tabButton.setTitle("\(BrowserUtil.shared.webItems.count)", for: .normal)
-        tabButton.setTitleColor(.black, for: .normal)
+
+        // web view delegate and clean webView until display
         view.subviews.forEach {
             if $0 is WKWebView {
                 $0.removeFromSuperview()
@@ -59,13 +82,26 @@ class HomeVC: BaseVC {
             webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), context: nil)
             webView.addObserver(self, forKeyPath: #keyPath(WKWebView.url), context: nil)
         }
+        
+        // refresh zhe home view state
         setupUI()
+        
+        // load GAD
+        GADUtil.share.load(.native)
+        
     }
     
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        // ad flag
+        willApear = false
+        
         webViewDisappear()
+        
+        // ad disappear
+        GADUtil.share.close(.native)
     }
     
     func webViewDisappear() {
@@ -108,7 +144,7 @@ class HomeVC: BaseVC {
         
         
         tabButton.setTitle("\(BrowserUtil.shared.webItems.count)", for: .normal)
-        
+        tabButton.setTitleColor(.black, for: .normal)
     }
     
     func searching() {
@@ -256,9 +292,11 @@ extension HomeVC {
             let vc = CleanVC {
                 FirebaseUtil.logEvent(name: .cleanSuccess)
                 BrowserUtil.shared.clean(from: self)
-                self.setupUI()
-                self.alert("Cleaned successfully.")
-                FirebaseUtil.logEvent(name: .cleanAlert)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    self.setupUI()
+                    FirebaseUtil.logEvent(name: .cleanAlert)
+                    self.alert("Cleaned Successfully.")
+                }
             }
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true)

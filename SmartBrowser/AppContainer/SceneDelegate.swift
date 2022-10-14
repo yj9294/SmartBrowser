@@ -44,6 +44,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window?.makeKeyAndVisible()
         
         AppSceneDelegate = self
+        
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -66,14 +68,35 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
+        // gad config
+        GADUtil.share.requestRemoteConfig()
+        
         if AppEnterbackground {
             FirebaseUtil.logEvent(name: .openHot)
         }
+        
         AppEnterbackground = false
         
-        self.window?.makeKeyAndVisible()
-        if let launchVC = self.window?.rootViewController as? LaunchVC {
-            launchVC.launching()
+        // 广告热启动
+        if let vc = window?.rootViewController?.presentedViewController {
+            vc.dismiss(animated: false) {
+                self.window?.makeKeyAndVisible()
+                if let launchVC = self.window?.rootViewController as? LaunchVC {
+                    launchVC.launching()
+                }
+            }
+        } else if let vc = homeWindow?.rootViewController?.presentedViewController {
+            vc.dismiss(animated: false) {
+                self.window?.makeKeyAndVisible()
+                if let launchVC = self.window?.rootViewController as? LaunchVC {
+                    launchVC.launching()
+                }
+            }
+        } else {
+            self.window?.makeKeyAndVisible()
+            if let launchVC = self.window?.rootViewController as? LaunchVC {
+                launchVC.launching()
+            }
         }
     }
 

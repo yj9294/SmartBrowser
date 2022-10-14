@@ -10,10 +10,28 @@ import UIKit
 class TabVC: BaseVC {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var adView: NativeADView!
+    
+    var willApear = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        
+        // ad loaded
+        NotificationCenter.default.addObserver(forName: .nativeUpdate, object: nil, queue: .main) { [weak self] noti in
+            if let ad = noti.object as? NativeADModel, self?.willApear == true {
+                self?.adView.nativeAd = ad.nativeAd
+            } else {
+                self?.adView.nativeAd = nil
+            }
+        }
+        
+        // native ad enterbackground
+        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { [weak self] _ in
+            GADUtil.share.close(.native)
+            self?.willApear = false
+        }
     }
     
     func setupUI() {
@@ -22,7 +40,26 @@ class TabVC: BaseVC {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // app log event
         FirebaseUtil.logEvent(name: .tabShow)
+        
+        // ad flag
+        willApear = true
+        
+        // load GAD
+        GADUtil.share.load(.native)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // ad flag
+        willApear = false
+        
+        // ad disappear
+        GADUtil.share.close(.native)
     }
 
 }

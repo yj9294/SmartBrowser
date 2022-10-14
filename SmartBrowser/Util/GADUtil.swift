@@ -61,6 +61,9 @@ class GADUtil: NSObject {
     }.filter { m in
         m.position != .all
     }
+    
+    // native ad impression date
+    var tabNativeAdImpressionDate: Date? = nil
 }
 
 extension GADUtil {
@@ -230,10 +233,11 @@ extension GADUtil {
                 ad.clickHandler = {
                     self.add(.click)
                 }
-                // 10秒间隔
-                if loadAD?.isNeedShow == true {
-                    completion(ad)
-                }
+//                // 10秒间隔 只是针对 广告 的时间
+//                if loadAD?.isNeedShow == true {
+//                    completion(ad)
+//                }
+                completion(ad)
             } else {
                 /// 预加载回来数据 当时已经有显示数据了 并且没超过限制
                 if loadAD?.isDisplay == true, !isADLimited {

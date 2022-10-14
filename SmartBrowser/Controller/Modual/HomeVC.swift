@@ -24,6 +24,7 @@ class HomeVC: BaseVC {
     
     var startDate: Date? = nil
     var willApear = false
+    var adImpressionDate: Date? = nil
 
     var webView: WKWebView {
         BrowserUtil.shared.webItem.webView
@@ -38,8 +39,17 @@ class HomeVC: BaseVC {
         
         // ad loaded
         NotificationCenter.default.addObserver(forName: .nativeUpdate, object: nil, queue: .main) { [weak self] noti in
+            
+            // native ad is being display.
             if let ad = noti.object as? NativeADModel, self?.willApear == true {
-                self?.adView.nativeAd = ad.nativeAd
+                
+                // view controller impression ad date betwieen 10s to show ad
+                if Date().timeIntervalSince1970 - (self?.adImpressionDate ?? Date(timeIntervalSinceNow: -11)).timeIntervalSince1970 > 10 {
+                    self?.adView.nativeAd = ad.nativeAd
+                    self?.adImpressionDate = Date()
+                } else {
+                    SLog("[ad] 10s home 原生广告刷新或数据填充间隔.")
+                }
             } else {
                 self?.adView.nativeAd = nil
             }
@@ -67,6 +77,10 @@ class HomeVC: BaseVC {
         FirebaseUtil.logEvent(name: .homeShow)
         if BrowserUtil.shared.webItem.isNavigation {
             FirebaseUtil.logEvent(name: .navigaShow)
+            
+            // load GAD
+            GADUtil.share.load(.native)
+            GADUtil.share.load(.interstitial)
         }
 
         // web view delegate and clean webView until display
@@ -86,8 +100,7 @@ class HomeVC: BaseVC {
         // refresh zhe home view state
         setupUI()
         
-        // load GAD
-        GADUtil.share.load(.native)
+
         
     }
     
@@ -223,6 +236,11 @@ extension HomeVC {
             // cancel
             FirebaseUtil.logEvent(name: .cleanClick)
             stopSearch()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                if self.webView.url == nil {
+                    self.webView.removeFromSuperview()
+                }
+            }
         } else {
             // search
             searching()

@@ -13,6 +13,9 @@ class TabVC: BaseVC {
     @IBOutlet weak var adView: NativeADView!
     
     var willApear = false
+    var adImpressionDate: Date? {
+        GADUtil.share.tabNativeAdImpressionDate
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,8 +23,17 @@ class TabVC: BaseVC {
         
         // ad loaded
         NotificationCenter.default.addObserver(forName: .nativeUpdate, object: nil, queue: .main) { [weak self] noti in
+            
+            // native ad is being display.
             if let ad = noti.object as? NativeADModel, self?.willApear == true {
-                self?.adView.nativeAd = ad.nativeAd
+                
+                // view controller impression ad date betwieen 10s to show ad
+                if Date().timeIntervalSince1970 - (self?.adImpressionDate ?? Date(timeIntervalSinceNow: -11)).timeIntervalSince1970 > 10 {
+                    self?.adView.nativeAd = ad.nativeAd
+                    GADUtil.share.tabNativeAdImpressionDate = Date()
+                } else {
+                    SLog("[ad] 10s tab 原生广告刷新间隔.")
+                }
             } else {
                 self?.adView.nativeAd = nil
             }
@@ -50,6 +62,7 @@ class TabVC: BaseVC {
         
         // load GAD
         GADUtil.share.load(.native)
+        GADUtil.share.load(.interstitial)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
